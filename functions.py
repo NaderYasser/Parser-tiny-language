@@ -74,20 +74,19 @@ def classifier(tokens):
 
     for token in tokens:
         if (reservedWords(token)):
-            temp = token + ", Reserved Word"
+            temp = token 
 
         elif (isSpecial(token)):
-            temp = token + ", Special Symbol"
+            temp = token 
 
         elif((isIdentfier(token))):
-            temp = token + ", Identfier"
+            temp = token
 
         elif ((isNumber(token))):
-            temp = token + ", Number"
+            temp = token 
 
         else:
-            temp = token + ", Other"
-
+            temp = token 
         tokens_list.append(temp)
 
     return tokens_list
@@ -117,17 +116,6 @@ def classifier(tokens):
 
     return type_value_list  
 '''
-
-#     if (isIdentfier):
-#         if (reservedWords):
-#             # pass to reserved word list
-#         esle:    
-#             # pass to identifiers list
-
-#     elif (isSpecial):
-#         # pass to sympols list
-#     elif (isNumber):
-#         #pass to numbers list 
 
 
 
