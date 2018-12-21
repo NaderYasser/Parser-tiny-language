@@ -1,4 +1,4 @@
- ##Parse Tree for TINY Language.
+##Parse Tree for TINY Language.
 
 ## How to run:
 clone the repo
@@ -24,7 +24,7 @@ until (x = 0)
 write fact
 end
 ```
-![alt parse tree](https://drive.google.com/open?id=15fWXpxm8cSFCn1wy-yfvwLqyF8KM5MzG)
+![alt parse tree](https://imgur.com/a/NIAGXAe)
 ```
 x:= 2 ;
 y := 3 ;
