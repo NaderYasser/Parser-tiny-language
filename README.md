@@ -1,4 +1,4 @@
-##Parse Tree for TINY Language.
+## Parser for TINY Language.
 
 ## How to run:
 clone the repo
