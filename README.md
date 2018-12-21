@@ -24,7 +24,7 @@ until (x = 0)
 write fact
 end
 ```
-![alt parse tree](https://imgur.com/a/NIAGXAe)
+![alt parse tree](https://i.imgur.com/bY6TxQg.png)
 ```
 x:= 2 ;
 y := 3 ;
@@ -46,4 +46,4 @@ end
 end ;
 write z
 ```
-![alt parse tree](https://drive.google.com/open?id=1xJXOa5n9xj1GGGfUC8P0nun6Y6DuRC-x)
+![alt parse tree](https://i.imgur.com/2tjo6iL.png)
