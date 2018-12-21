@@ -1,10 +1,10 @@
 from in_out import *
-from graphviz import Graph
-Graph = Graph(format='png')
+import pygraphviz as pgv
+Graph=pgv.AGraph()
 
 
 index = 0
-tokens = ['x',':=','6',';','z',':=','y','+','7']
+tokens = ['read','x','read', 'y']
 def get_token():
     global index
     if(index < len(tokens)):
@@ -27,14 +27,14 @@ def factor():
 
     if (token == '('):
         match('(')
-        #exp()
+        exp()
         match(')')
     else:
         temp = token
         match(token)
-        Graph.node(count,label = temp)
+        Graph.add_node(count,label = temp)
         count += 1
-    return Graph.node(count-1)
+    return Graph.get_node(count-1)
 
 
 def term():
@@ -43,14 +43,14 @@ def term():
     global count
     while (token == '*' or token == '/') :
         #name = name + '1'
-        Graph.node(count,label = token)
-        parentnode = Graph.node(count)
+        Graph.add_node(count,label = token)
+        parentnode = Graph.get_node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild =factor()
-        Graph.edge(parentnode,leftchild)
-        Graph.edge(parentnode,rightchild)  #rightchild
+        Graph.add_edge(parentnode,leftchild)
+        Graph.add_edge(parentnode,rightchild)  #rightchild
         temp = parentnode
 
     return temp    
@@ -62,41 +62,55 @@ def exp():
     global count
     while (token == '+' or token == '-' ) :
         #name = name + '1'
-        Graph.node(count,label = token)
-        parentnode = Graph.node(count)
+        Graph.add_node(count,label = token)
+        parentnode = Graph.get_node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild =term()
-        Graph.edge(parentnode,leftchild)
-        Graph.edge(parentnode,rightchild)  #rightchild
+        Graph.add_edge(parentnode,leftchild)
+        Graph.add_edge(parentnode,rightchild)  #rightchild
         temp = parentnode
     if (token == '<' or token == '>'):
-        Graph.node(count,label = token)
-        parentnode = Graph.node(count)
+        Graph.add_node(count,label = token)
+        parentnode = Graph.get_node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild = exp()
-        Graph.edge(parentnode,leftchild)
-        Graph.edge(parentnode,rightchild)
+        Graph.add_edge(parentnode,leftchild)
+        Graph.add_edge(parentnode,rightchild)
         return parentnode
     
     else:
         return temp
+
+
+def Read():
+    global count
+    match('read')
+    if(isIdentfier(token)):
+        Graph.add_node(count,label = 'read')
+        Graph.add_node(token)
+        Graph.add_edge(count,token)
+        temp = Graph.get_node(count)
+        count +=1
+    return temp
+
+
 def assign():
     temp = exp()        
     global token
     global count
     while (token == ':=') :
-        Graph.node(count,label = token)
-        parentnode = Graph.node(count)
+        Graph.add_node(count,label = token)
+        parentnode = Graph.get_node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild =exp()
-        Graph.edge(parentnode,leftchild)
-        Graph.edge(parentnode,rightchild)  #rightchild
+        Graph.add_edge(parentnode,leftchild)
+        Graph.add_edge(parentnode,rightchild)  #rightchild
         temp = parentnode
 
     return temp    
@@ -105,8 +119,8 @@ def assign():
 
 
 def stmt():
-    temp = assign()
-    Graph.subgraph(temp)
+    temp = Read()
+    Graph.add_subgraph(temp, rank = 'same')
     return temp
 
 
@@ -114,11 +128,16 @@ def stmt():
     
 def stmtSeq():
     temp = stmt()
+    global count
     while (token == ';'):
+        # parentnode = Graph.add_node(count , label='StmtSeq')
         match(token)
-        temp1 =  stmt()
-        Graph.edge(temp1,temp )
-        temp = temp1
+        leftchild = temp
+        rightchild =  stmt()
+        Graph.add_edge('StmtSeq',leftchild)
+        Graph.add_edge('StmtSeq',rightchild)
+        count+=1
+        
     return temp 
 
 
@@ -129,7 +148,7 @@ stmtSeq()
 
 
 
-Graph.render() 
+Graph.draw('file1.png',prog='dot') 
 
 
 
