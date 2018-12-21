@@ -1,9 +1,12 @@
 ## Parser for Tiny Language.
 
 ## How to run:
-clone the repo
-pip3 install -r requirements.txt
-python3 main.py
+### Executable
+- Clone the repo
+- Go to dist folder
+- Place your Tiny syntax in sample_input.txt filr
+- Double click on Parsser_class file
+- Find and click SyntaxTree.png
 
 ## Input:
 Place your Tiny syntax in sample_input.txt file
