@@ -6,7 +6,6 @@ Graph=pgv.AGraph()
 index = 0
 
 tokens = read_lines('testCase.txt') 
-
 def get_token():
     global index
     if(index < len(tokens)):
@@ -154,6 +153,7 @@ def repeat():
     Graph.add_edge(parentnode,rightchild)
     return parentnode
 
+
 def assign():
     temp = exp()        
     global token
@@ -173,6 +173,9 @@ def assign():
 
     return temp    
 
+
+
+
 def stmt():
     if token == 'read':
         temp = Read()
@@ -185,7 +188,10 @@ def stmt():
     else:
         temp = assign()    
     return temp
-   
+
+
+
+    
 def stmtSeq():
     temp = stmt()
     temp1 = temp
@@ -195,12 +201,7 @@ def stmtSeq():
         temp2 = stmt()
         ConnectHorizontal(temp1,temp2)
         temp1 = temp2
-
     return temp
 
 stmtSeq()
 Graph.draw('SyntaxTree.png',prog='dot') 
-
-
-
-
