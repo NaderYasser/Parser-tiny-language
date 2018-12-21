@@ -1,12 +1,10 @@
 from in_out import *
-import pygraphviz as pgv
-Graph=pgv.AGraph()
-Graph1=pgv.AGraph()
-Graph2=pgv.AGraph()
-#tokens=get_tokens("x := x + 3 ; ")
+from graphviz import Graph
+Graph = Graph(format='png')
+
 
 index = 0
-tokens = ['x',':=','3','*','6','+','y','*','7','-','z']
+tokens = ['x',':=','6',';','z',':=','y','+','7']
 def get_token():
     global index
     if(index < len(tokens)):
@@ -29,14 +27,14 @@ def factor():
 
     if (token == '('):
         match('(')
-        #exp
+        #exp()
         match(')')
     else:
         temp = token
         match(token)
-        Graph.add_node(count,label = temp)
+        Graph.node(count,label = temp)
         count += 1
-    return Graph.get_node(count-1)
+    return Graph.node(count-1)
 
 
 def term():
@@ -45,14 +43,14 @@ def term():
     global count
     while (token == '*' or token == '/') :
         #name = name + '1'
-        Graph.add_node(count,label = token)
-        parentnode = Graph.get_node(count)
+        Graph.node(count,label = token)
+        parentnode = Graph.node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild =factor()
-        Graph.add_edge(parentnode,leftchild)
-        Graph.add_edge(parentnode,rightchild)  #rightchild
+        Graph.edge(parentnode,leftchild)
+        Graph.edge(parentnode,rightchild)  #rightchild
         temp = parentnode
 
     return temp    
@@ -62,43 +60,77 @@ def exp():
     temp = term()        
     global token
     global count
-    while (token == '+' or token == '-') :
+    while (token == '+' or token == '-' ) :
         #name = name + '1'
-        Graph.add_node(count,label = token)
-        parentnode = Graph.get_node(count)
+        Graph.node(count,label = token)
+        parentnode = Graph.node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild =term()
-        Graph.add_edge(parentnode,leftchild)
-        Graph.add_edge(parentnode,rightchild)  #rightchild
+        Graph.edge(parentnode,leftchild)
+        Graph.edge(parentnode,rightchild)  #rightchild
         temp = parentnode
-
-    return temp
+    if (token == '<' or token == '>'):
+        Graph.node(count,label = token)
+        parentnode = Graph.node(count)
+        count += 1
+        match(token)
+        leftchild = temp
+        rightchild = exp()
+        Graph.edge(parentnode,leftchild)
+        Graph.edge(parentnode,rightchild)
+        return parentnode
+    
+    else:
+        return temp
 def assign():
     temp = exp()        
     global token
     global count
     while (token == ':=') :
-        #name = name + '1'
-        Graph.add_node(count,label = token)
-        parentnode = Graph.get_node(count)
+        Graph.node(count,label = token)
+        parentnode = Graph.node(count)
         count += 1
         match(token)
         leftchild = temp
         rightchild =exp()
-        Graph.add_edge(parentnode,leftchild)
-        Graph.add_edge(parentnode,rightchild)  #rightchild
+        Graph.edge(parentnode,leftchild)
+        Graph.edge(parentnode,rightchild)  #rightchild
         temp = parentnode
 
     return temp    
 
-# factor()
-# term()
-assign()
 
 
-Graph.draw('file1.png',prog='dot') 
+
+def stmt():
+    temp = assign()
+    Graph.subgraph(temp)
+    return temp
+
+
+
+    
+def stmtSeq():
+    temp = stmt()
+    while (token == ';'):
+        match(token)
+        temp1 =  stmt()
+        Graph.edge(temp1,temp )
+        temp = temp1
+    return temp 
+
+
+
+
+stmtSeq()
+
+
+
+
+Graph.render() 
+
 
 
 
