@@ -4,7 +4,7 @@
 ### Executable
 - Clone the repo
 - Go to dist folder
-- Place your Tiny syntax in sample_input.txt filr
+- Place your Tiny syntax in testCase.txt file
 - Double click on Parsser_class file
 - Find and click SyntaxTree.png
 
