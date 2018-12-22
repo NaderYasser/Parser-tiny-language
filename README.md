@@ -3,16 +3,16 @@
 ## How to run:
 ### Executable
 - Clone the repo
-- Go to dist folder
+- Go to dist\Parser_class folder
 - Place your Tiny syntax in testCase.txt file
-- Double click on Parsser_class file
+- Double click on Parsser_class file or ( open the dist\Parser_class folder in terminal and write ./Parser_class )
 - Find and click SyntaxTree.png
 
 ## Input:
-Place your Tiny syntax in sample_input.txt file
+Place your Tiny syntax in testCase.txt file
 
 ## Output:
-output.png
+SyntaxTree.png
 
 ## Examples:
 
